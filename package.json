@@ -1,0 +1,11 @@
+{
+  "name": "workflows",
+  "version": "0.0.1",
+  "description": "Gulp Git Browserify Training",
+  "repository": {
+    "type": "git",
+    "url": "?.git"
+  },
+  "author": "mm",
+  "license": "ISC"
+}
