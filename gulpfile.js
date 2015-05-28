@@ -4,6 +4,8 @@ var coffee 		= require('gulp-coffee');
 var concat 		= require('gulp-concat');
 var browserify    = require('gulp-browserify');
 var compass       = require('gulp-compass');
+var connect       = require('gulp-connect');
+
 
 //gulp.task('somenameofyourchoicecalledfromterminal', fn);
 
@@ -34,7 +36,8 @@ gulp.task('js', function() {
       .pipe(concat('script.js'))
       .pipe(browserify())
     //.pipe(sourcemaps.write())
-    .pipe(gulp.dest('builds/development/js'));
+    .pipe(gulp.dest('builds/development/js'))
+    .pipe(connect.reload())
 });
 
 gulp.task('compass', function() {
@@ -45,7 +48,8 @@ gulp.task('compass', function() {
     	style: 'expanded'
     })
       .on('error', gutil.log))
-    .pipe(gulp.dest('builds/development/css'));
+    .pipe(gulp.dest('builds/development/css'))
+    .pipe(connect.reload())
 });
 
 gulp.task('watch', function() {
@@ -54,7 +58,16 @@ gulp.task('watch', function() {
   gulp.watch('components/sass/*.scss', ['compass']);
 });
 
-gulp.task('default', ['coffee', 'js', 'compass', 'watch']);  //dont NEED cb function
+gulp.task('connect', function() { //livereload doesn't work(?)
+  connect.server({
+    root: 'build/development/',
+    livereload: true,
+    port: 8888,
+    host: 'http://development.dev'
+  });
+});
+
+gulp.task('default', ['coffee', 'js', 'compass', 'connect', 'watch']);  //dont NEED cb function
 
 
 
