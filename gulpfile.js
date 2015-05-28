@@ -54,7 +54,7 @@ gulp.task('watch', function() {
   gulp.watch('components/sass/*.scss', ['compass']);
 });
 
-gulp.task('default', ['coffee', 'js', 'compass']);  //dont NEED cb function
+gulp.task('default', ['coffee', 'js', 'compass', 'watch']);  //dont NEED cb function
 
 
 
