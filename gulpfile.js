@@ -6,6 +6,8 @@ var browserify    = require('gulp-browserify');
 var compass       = require('gulp-compass');
 var connect       = require('gulp-connect');    //no worky
 var livereload    = require('gulp-livereload'); //no worky, also
+var gulpif    = require('gulp-if');
+var uglify    = require('gulp-uglify');
 
 var env, outputDir, sassStyle;
 var coffeeSources, jsSources, sassSources, htmlSources, jsonSources;
@@ -50,6 +52,7 @@ gulp.task('js', function() {
     //.pipe(sourcemaps.init())
       .pipe(concat('script.js'))
       .pipe(browserify())
+      .pipe(gulpif( env==='production', uglify() ))
     //.pipe(sourcemaps.write())
     .pipe(gulp.dest(outputDir+'js'))
     .pipe(livereload())//.pipe(connect.reload())
@@ -60,7 +63,7 @@ gulp.task('compass', function() {
     .pipe(compass({	//no need for a config.rb file!!!
     	sass: 'components/sass',
     	image: outputDir+'images',
-    	style: 'expanded'
+    	style: sassStyle
     })
       .on('error', gutil.log))
     .pipe(gulp.dest(outputDir+'css'))
